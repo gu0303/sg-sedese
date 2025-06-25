@@ -45,8 +45,10 @@ Route::get('/planilha/adicionar', [PlanilhaController::class, 'create'])->name('
 
 // Rotas para exibir os cards com últimas alterações
 
+Route::middleware(['auth'])->group(function () {
 Route::get('/posts', [AlteracaoCardController::class, 'index'])->name('posts.index');
 Route::post('/cards/store', [AlteracaoCardController::class, 'storeCard'])->name('cards.store');
 Route::get('/cards/edit/{id}', [AlteracaoCardController::class, 'editCard'])->name('cards.edit');
 Route::put('/cards/update/{id}', [AlteracaoCardController::class, 'updateCard'])->name('cards.update');
 Route::delete('/cards/destroy/{id}', [AlteracaoCardController::class, 'destroyCard'])->name('cards.destroy');
+});
