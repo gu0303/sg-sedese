@@ -16,7 +16,7 @@ use App\Http\Controllers\PlanilhaController;
 
 // Rota inicial
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 // Autenticação padrão do Laravel
