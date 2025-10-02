@@ -4,6 +4,8 @@
 @section('content_header_title', 'Editar descrição da alteração')
 @section('content_body')
 
+    <p style="font-weight: bold">Apenas edições dos campos!</p>
+
     @if (session('info'))
         <div class="alert alert-info">{{ session('info') }}</div>
     @endif
