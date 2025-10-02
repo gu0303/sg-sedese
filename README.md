@@ -5,9 +5,9 @@
 
 ### Versões:
 
-- PHP: 8.1
+- PHP: 8.2.29
 - MySql: 5.7.11
-- Laravel: 10.10
+- Laravel: 10.48.29
 - NodeJs: 18x
 - Composer: 2.8.11
 
