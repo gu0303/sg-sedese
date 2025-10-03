@@ -13,7 +13,7 @@ class PlanilhaController extends Controller
     private $fields = [
         'nome_sistema' => 'Nome do Sistema',
         'ip' => 'IP',
-        'ambiente' => 'Ambiente (produção/homologação/desenvolvimento)',
+        'ambiente' => 'Ambiente',
         'url' => 'URL',
         'tipo_os' => 'Tipo do Sistema Operacional',
         'usuario_os' => 'Usuário do Sistema Operacional',
@@ -33,7 +33,7 @@ class PlanilhaController extends Controller
     private $visibleFields = [
         'nome_sistema' => 'Nome do Sistema',
         'ip' => 'IP',
-        'ambiente' => 'Ambiente (produção/homologação/desenvolvimento)',
+        'ambiente' => 'Ambiente',
         'url' => 'URL',
     ];
 
@@ -69,13 +69,18 @@ class PlanilhaController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->only(array_keys($this->fields));
-
-        foreach ($this->fields as $field => $label) {
-            $data[$field] = $data[$field] ?? '';
+        $rules = [];
+        foreach (array_keys($this->fields) as $field) {
+            if ($field === 'ambiente') {
+                $rules[$field] = 'nullable|in:produção,homologação,desenvolvimento';
+            } else {
+                $rules[$field] = 'nullable|string|max:255';
+            }
         }
 
-        PlanilhaItem::create($data);
+        $validated = $request->validate($rules);
+
+        PlanilhaItem::create($validated);
 
         return redirect()->route('planilha.index')->with('success', 'Item adicionado com sucesso!');
     }
@@ -96,12 +101,16 @@ class PlanilhaController extends Controller
 
         $rules = [];
         foreach (array_keys($this->fields) as $field) {
-            $rules[$field] = 'nullable|string|max:255';
+            if ($field === 'ambiente') {
+                $rules[$field] = 'nullable|in:produção,homologação,desenvolvimento';
+            } else {
+                $rules[$field] = 'nullable|string|max:255';
+            }
         }
 
-        $request->validate($rules);
+        $validated = $request->validate($rules);
 
-        $item->update($request->only(array_keys($this->fields)));
+        $item->update($validated);
 
         return redirect()->route('planilha.index')->with('success', 'Item atualizado com sucesso!');
     }
