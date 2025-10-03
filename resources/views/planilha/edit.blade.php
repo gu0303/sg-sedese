@@ -3,25 +3,36 @@
 @section('title', 'Editar Item da Planilha')
 
 @section('content')
-
 <div class="container mb-3">
-        <h1>Editar Item</h1>
+    <h1>Editar Item</h1>
 
-        <form action="{{ route('planilha.update', $item->id) }}" method="POST">
-            @csrf
-            @method('PUT')
+    <form action="{{ route('planilha.update', $item->id) }}" method="POST">
+        @csrf
+        @method('PUT')
 
-            @foreach ($fields as $field => $label)
-                <div class="form-group">
-                    <label for="{{ $field }}">{{ $label }}</label>
-                    <input type="text" id="{{ $field }}" name="{{ $field }}" class="form-control"
-                        value="{{ old($field, $item->$field) }}">
-                </div>
-            @endforeach
+        @foreach ($fields as $field => $label)
+            <div class="form-group mt-2">
+                <label for="{{ $field }}">{{ $label }}</label>
 
-            <button type="submit" class="btn btn-primary mt-3">Salvar</button>
-            <a href="{{ route('planilha.index') }}" class="btn btn-secondary mt-3">Cancelar</a>
+                @if ($field === 'ambiente')
+                    <select id="{{ $field }}" name="{{ $field }}" class="form-control">
+                        <option value="">Selecione...</option>
+                        <option value="produção" {{ old($field, $item->$field) === 'produção' ? 'selected' : '' }}>Produção</option>
+                        <option value="homologação" {{ old($field, $item->$field) === 'homologação' ? 'selected' : '' }}>Homologação</option>
+                        <option value="desenvolvimento" {{ old($field, $item->$field) === 'desenvolvimento' ? 'selected' : '' }}>Desenvolvimento</option>
+                    </select>
+                @else
+                    <input type="text" 
+                           id="{{ $field }}" 
+                           name="{{ $field }}" 
+                           class="form-control"
+                           value="{{ old($field, $item->$field) }}">
+                @endif
+            </div>
+        @endforeach
 
-        </form>
-    </div>
+        <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+        <a href="{{ route('planilha.index') }}" class="btn btn-secondary mt-3">Cancelar</a>
+    </form>
+</div>
 @endsection

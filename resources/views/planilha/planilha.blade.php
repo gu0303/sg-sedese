@@ -46,10 +46,10 @@
                     @endif
 
                     <div class="table-responsive" style="overflow-y: auto; max-height: 600px;">
-                        <table class="table table-bordered mt-3">
+                        <table class="table table-bordered mt-3 table-sistemas">
                             <thead class="thead-light">
                                 <tr>
-                                    <th style="text-align: center;">Ações</th>
+                                    <th class="col-acoes">Ações</th>
                                     @foreach ($columns as $column => $label)
                                         <th>{{ $label }}</th>
                                     @endforeach
@@ -58,7 +58,7 @@
                             <tbody>
                                 @forelse ($planilhaItens as $item)
                                     <tr>
-                                        <td>
+                                        <td class="col-acoes">
                                             <div class="d-flex">
                                                 <a href="{{ route('planilha.edit', $item->id) }}"
                                                     class="btn btn-primary btn-sm mr-2">Editar</a>
@@ -118,6 +118,26 @@
         </div>
     </div>
 @endsection
+
+@push('css')
+<style>
+    .col-acoes {
+        width: 210px !important;
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    .table-sistemas {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    .table-sistemas td,
+    .table-sistemas th {
+        word-break: break-all;
+    }
+</style>
+@endpush
 
 @push('js')
     <script>
