@@ -16,7 +16,14 @@ class AlteracaoCardController extends Controller
         $query = AlteracaoCard::with('user')->orderBy('created_at', 'desc');
 
         if ($search) {
-            $query->where('descricao', 'like', "%{$search}%");
+            $query->where(function ($q) use ($search) {
+                $q->where('descricao', 'like', "%{$search}%")
+                ->orWhere('created_at', 'like', "%{$search}%")
+                ->orWhere('updated_at', 'like', "%{$search}%")
+                ->orWhereHas('user', function ($u) use ($search) {
+                $u->where('name', 'like', "%{$search}%");
+          });
+        });
         }
 
         $alteracoes = $query->get();
