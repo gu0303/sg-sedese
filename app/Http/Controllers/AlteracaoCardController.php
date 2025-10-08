@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class AlteracaoCardController extends Controller
 {
-    // Exibe as alterações em cards
+    // Pesquisa das alterações em cards
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -48,6 +48,12 @@ class AlteracaoCardController extends Controller
     }
 
         $alteracoes = $query->get();
+
+        // Verifica se não encontrou nenhum resultado
+        $mensagem = null;
+        if ($search && $alteracoes->isEmpty()) {
+            $mensagem = "Nenhum item correspondente à pesquisa \"{$search}\" foi encontrado.";
+        }
 
         return view('posts.posts', compact('alteracoes'));
     }
