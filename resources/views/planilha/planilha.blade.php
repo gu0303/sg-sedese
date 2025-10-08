@@ -145,7 +145,7 @@
                 'Senha Database':item.senha_db,
                 'Caminho da Aplicação':item.caminho,
                 'Repositório git':item.git,
-                'Empresa/Desenvolvedor':item.empresa_desenvolvedor,
+                'Empresa/Desenvolvedor':item.empresa_desenvolvdor,
                 'Responsavel/Diretor':item.responsavel_diretor
             };
 
