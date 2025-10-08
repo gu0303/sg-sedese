@@ -45,20 +45,20 @@
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 
-                    <div class="table-responsive" style="overflow-y: auto; max-height: 600px;">
-                        <table class="table table-bordered mt-3 table-sistemas">
+                    <div class="table-responsive" style="overflow-x: auto; overflow-y: auto; max-height: 600px;">
+                        <table class="table table-bordered mt-3">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="col-acoes">Ações</th>
+                                    <th style="text-align: center; min-width: 200px;">Ações</th>
                                     @foreach ($columns as $column => $label)
-                                        <th>{{ $label }}</th>
+                                        <th style="min-width: 200px">{{ $label }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($planilhaItens as $item)
                                     <tr>
-                                        <td class="col-acoes">
+                                        <td>
                                             <div class="d-flex">
                                                 <a href="{{ route('planilha.edit', $item->id) }}"
                                                     class="btn btn-primary btn-sm mr-2">Editar</a>
@@ -118,26 +118,6 @@
         </div>
     </div>
 @endsection
-
-@push('css')
-<style>
-    .col-acoes {
-        width: 210px !important;
-        white-space: nowrap;
-        text-align: center;
-    }
-
-    .table-sistemas {
-        table-layout: fixed;
-        width: 100%;
-    }
-
-    .table-sistemas td,
-    .table-sistemas th {
-        word-break: break-all;
-    }
-</style>
-@endpush
 
 @push('js')
     <script>
