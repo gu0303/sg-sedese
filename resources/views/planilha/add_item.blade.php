@@ -19,9 +19,9 @@
                 @if ($name === 'ambiente')
                     <select name="ambiente" id="ambiente" class="form-control">
                         <option value="">Selecione...</option>
-                        <option value="produção" {{ old('ambiente') == 'produção' ? 'selected' : '' }}>Produção</option>
-                        <option value="homologação" {{ old('ambiente') == 'homologação' ? 'selected' : '' }}>Homologação</option>
-                        <option value="desenvolvimento" {{ old('ambiente') == 'desenvolvimento' ? 'selected' : '' }}>Desenvolvimento</option>
+                        <option value="Produção" {{ old('ambiente') == 'Produção' ? 'selected' : '' }}>Produção</option>
+                        <option value="Homologação" {{ old('ambiente') == 'Homologação' ? 'selected' : '' }}>Homologação</option>
+                        <option value="Desenvolvimento" {{ old('ambiente') == 'Desenvolvimento' ? 'selected' : '' }}>Desenvolvimento</option>
                     </select>
                 @else
                     <input type="text" name="{{ $name }}" class="form-control" value="{{ old($name) }}">

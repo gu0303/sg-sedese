@@ -72,7 +72,7 @@ class PlanilhaController extends Controller
         $rules = [];
         foreach (array_keys($this->fields) as $field) {
             if ($field === 'ambiente') {
-                $rules[$field] = 'nullable|in:produção,homologação,desenvolvimento';
+                $rules[$field] = 'nullable|in:Produção,Homologação,Desenvolvimento';
             } else {
                 $rules[$field] = 'nullable|string|max:255';
             }
@@ -102,7 +102,7 @@ class PlanilhaController extends Controller
         $rules = [];
         foreach (array_keys($this->fields) as $field) {
             if ($field === 'ambiente') {
-                $rules[$field] = 'nullable|in:produção,homologação,desenvolvimento';
+                $rules[$field] = 'nullable|in:Produção,Homologação,Desenvolvimento';
             } else {
                 $rules[$field] = 'nullable|string|max:255';
             }
