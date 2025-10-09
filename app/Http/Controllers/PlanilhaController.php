@@ -45,7 +45,7 @@ class PlanilhaController extends Controller
 
         if ($search) {
             $query->where(function ($q) use ($search) {
-                foreach (array_keys($this->visibleFields) as $field) {
+                foreach (array_keys($this->fields) as $field) {
                     $q->orWhere($field, 'like', "%{$search}%");
                 }
             });
