@@ -131,7 +131,7 @@ class PlanilhaController extends Controller
         $newValues = $request->only(array_keys($this->fields));
 
         $changed = false;
-        $descricao = "Alteração no campo: ";
+        $descricao = "Campo ";
         $vazio = "Campo vazio";
 
         $planilhaItem->update($newValues);
@@ -146,7 +146,7 @@ class PlanilhaController extends Controller
                 $oldFormatted = (trim($oldValue) === '') ? $vazio : e($oldValue);
                 $newFormatted = (trim($newValue) === '') ? $vazio : e($newValue);
 
-                $descricao .= "{$label}, de '{$oldFormatted}' para '{$newFormatted}'. ";
+                $descricao .= "{$label} alterado de '{$oldFormatted}' para '{$newFormatted}'. ";
             }
         }
 
