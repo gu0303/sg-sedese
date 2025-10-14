@@ -131,7 +131,7 @@ class PlanilhaController extends Controller
         $newValues = $request->only(array_keys($this->fields));
 
         $changed = false;
-        $descricao = "Campo ";
+        $descricao = "Campo: ";
         $vazio = "Campo vazio";
 
         $planilhaItem->update($newValues);
@@ -139,6 +139,7 @@ class PlanilhaController extends Controller
         foreach ($oldValues as $field => $oldValue) {
             $newValue = $planilhaItem->$field;
 
+            // Verifica campo por campo o que mudou
             if ($oldValue != $newValue) {
                 $changed = true;
                 $label = $this->fields[$field] ?? $field;
