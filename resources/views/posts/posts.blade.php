@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="card-body" style="display: none;">
-            <p>Aqui é armazenado a alteração dos itens (não inclui a criação e exclusão dos itens)</p>
+            <p>Aqui é armazenado as alterações das aplicações (não inclui a criação e exclusão das aplicações)</p>
         </div>
     </div>
 
