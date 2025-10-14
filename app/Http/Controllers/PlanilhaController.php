@@ -146,7 +146,7 @@ class PlanilhaController extends Controller
                 $oldFormatted = (trim($oldValue) === '') ? $vazio : e($oldValue);
                 $newFormatted = (trim($newValue) === '') ? $vazio : e($newValue);
 
-                $descricao .= "{$label} de '{$oldFormatted}' para '{$newFormatted}'. ";
+                $descricao .= "{$label}, de '{$oldFormatted}' para '{$newFormatted}'. ";
             }
         }
 
