@@ -61,7 +61,8 @@
                 <form action="{{ route('cards.destroy', $alteracao->id) }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger btn-sm">Remover</button>
+                    <button class="btn btn-danger btn-sm"
+                    onclick="return confirm('Tem certeza que deseja remover esse post?')">Remover</button>
                 </form>
             </div>
         </div>

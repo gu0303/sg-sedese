@@ -67,7 +67,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Tem certeza que deseja esse sistema?')">Remover</button>
+                                                        onclick="return confirm('Tem certeza que deseja remover esse sistema?')">Remover</button>
                                                 </form>
                                                 <button type="button" class="btn btn-warning btn-sm ml-2"
                                                     data-item='@json($item)'
