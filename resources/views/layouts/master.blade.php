@@ -25,7 +25,7 @@
 {{-- Create a common footer --}}
 @section('footer')
     <div class="float">
-        <strong>Version: {{ config('app.version', '1.5.4') }}</strong>
+        <strong>Version: {{ config('app.version', '1.5.5') }}</strong>
     </div>
 @stop
 {{-- Add common Javascript/Jquery code --}}
