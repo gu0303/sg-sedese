@@ -2,8 +2,8 @@
 
 @section('subtitle', 'Editar Descrição')
 @section('content_header_title', 'Editar Descrição da Alteração')
-@section('content_body')
 
+@section('content_body')
     <div class="col-md-8 offset-md-2">
         <div class="card">
             <div class="card-header">
@@ -21,7 +21,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('cards.update', $card->id) }}" method="POST">
+                <form id="editCardForm" action="{{ route('cards.update', $card->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -33,9 +33,19 @@
                         <a href="{{ route('posts.index') }}" class="btn btn-secondary mt-2 ml-2">Voltar</a>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
 
+    {{-- Script de validação --}}
+    <script>
+        document.getElementById('editCardForm').addEventListener('submit', function (event) {
+            const descricao = document.getElementById('descricao').value.trim();
+
+            if (descricao === '') {
+                event.preventDefault();
+                alert('A descrição não pode estar vazia.');
+            }
+        });
+    </script>
 @endsection

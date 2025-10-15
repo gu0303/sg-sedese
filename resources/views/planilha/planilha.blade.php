@@ -45,20 +45,20 @@
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 
-                    <div class="table-responsive" style="overflow-y: auto; max-height: 600px;">
-                        <table class="table table-bordered mt-3 table-sistemas">
+                    <div class="table-responsive" style="overflow-x: auto; overflow-y: auto; max-height: 600px;">
+                        <table class="table table-bordered mt-3">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="col-acoes">Ações</th>
+                                    <th style="text-align: center; min-width: 200px;">Ações</th>
                                     @foreach ($columns as $column => $label)
-                                        <th>{{ $label }}</th>
+                                        <th style="min-width: 200px">{{ $label }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($planilhaItens as $item)
                                     <tr>
-                                        <td class="col-acoes">
+                                        <td>
                                             <div class="d-flex">
                                                 <a href="{{ route('planilha.edit', $item->id) }}"
                                                     class="btn btn-primary btn-sm mr-2">Editar</a>
@@ -67,7 +67,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Tem certeza que deseja esse sistema?')">Remover</button>
+                                                        onclick="return confirm('Tem certeza que deseja remover esse sistema?')">Remover</button>
                                                 </form>
                                                 <button type="button" class="btn btn-warning btn-sm ml-2"
                                                     data-item='@json($item)'
@@ -103,7 +103,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Detalhes do Item</h5>
+                    <h5 class="modal-title">Detalhes do Sistema</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -118,26 +118,6 @@
         </div>
     </div>
 @endsection
-
-@push('css')
-<style>
-    .col-acoes {
-        width: 210px !important;
-        white-space: nowrap;
-        text-align: center;
-    }
-
-    .table-sistemas {
-        table-layout: fixed;
-        width: 100%;
-    }
-
-    .table-sistemas td,
-    .table-sistemas th {
-        word-break: break-all;
-    }
-</style>
-@endpush
 
 @push('js')
     <script>
@@ -165,7 +145,7 @@
                 'Senha Database':item.senha_db,
                 'Caminho da Aplicação':item.caminho,
                 'Repositório git':item.git,
-                'Empresa/Desenvolvedor':item.empresa_desenvolvedor,
+                'Empresa/Desenvolvedor':item.empresa_desenvolvdor,
                 'Responsavel/Diretor':item.responsavel_diretor
             };
 

@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AlteracaoCard;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class AlteracaoCardController extends Controller
 {
-    // Exibe as alterações em cards
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -16,12 +16,52 @@ class AlteracaoCardController extends Controller
         $query = AlteracaoCard::with('user')->orderBy('created_at', 'desc');
 
         if ($search) {
-            $query->where('descricao', 'like', "%{$search}%");
+            // Detecta se é uma data completa (dd/mm/yyyy) ou apenas dia/mês (dd/mm)
+            $isFullDateBr = preg_match('/\d{2}\/\d{2}\/\d{4}/', $search);
+            $isDayMonth = preg_match('/\d{2}\/\d{2}(?!\/\d{4})/', $search);
+
+            $date = null;
+
+            if ($isFullDateBr) {
+                // Tenta converter datas completas
+                try {
+                    $date = \Carbon\Carbon::createFromFormat('d/m/Y H:i', $search)->format('Y-m-d H:i');
+                } catch (\Exception $e) {
+                    try {
+                        $date = \Carbon\Carbon::createFromFormat('d/m/Y', $search)->format('Y-m-d');
+                    } catch (\Exception $e2) {
+                        $date = null;
+                    }
+                }
+            }
+
+            $query->where(function ($q) use ($search, $isFullDateBr, $isDayMonth, $date) {
+                $q->where('descricao', 'like', "%{$search}%")
+                ->orWhereHas('user', function ($u) use ($search) {
+                    $u->where('name', 'like', "%{$search}%");
+                });
+
+                // Busca por data completa (com ano)
+                if ($isFullDateBr && $date) {
+                    $q->orWhere('created_at', 'like', "%{$date}%")
+                    ->orWhere('updated_at', 'like', "%{$date}%");
+                }
+
+                // Busca por data parcial (sem ano)
+                if ($isDayMonth) {
+                    $parts = explode('/', $search);
+                    if (count($parts) === 2) {
+                        $monthDay = sprintf("-%02d-%02d", $parts[1], $parts[0]);
+                        $q->orWhere('created_at', 'like', "%{$monthDay}%")
+                        ->orWhere('updated_at', 'like', "%{$monthDay}%");
+                    }
+                }
+            });
         }
 
         $alteracoes = $query->get();
 
-        return view('posts.posts', compact('alteracoes'));
+        return view('posts.posts', compact('alteracoes', 'search'));
     }
 
     // Salva um novo card de alteração

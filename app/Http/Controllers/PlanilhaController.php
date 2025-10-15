@@ -45,7 +45,7 @@ class PlanilhaController extends Controller
 
         if ($search) {
             $query->where(function ($q) use ($search) {
-                foreach (array_keys($this->visibleFields) as $field) {
+                foreach (array_keys($this->fields) as $field) {
                     $q->orWhere($field, 'like', "%{$search}%");
                 }
             });
@@ -72,7 +72,7 @@ class PlanilhaController extends Controller
         $rules = [];
         foreach (array_keys($this->fields) as $field) {
             if ($field === 'ambiente') {
-                $rules[$field] = 'nullable|in:produção,homologação,desenvolvimento';
+                $rules[$field] = 'nullable|in:Produção,Homologação,Desenvolvimento';
             } else {
                 $rules[$field] = 'nullable|string|max:255';
             }
@@ -102,7 +102,7 @@ class PlanilhaController extends Controller
         $rules = [];
         foreach (array_keys($this->fields) as $field) {
             if ($field === 'ambiente') {
-                $rules[$field] = 'nullable|in:produção,homologação,desenvolvimento';
+                $rules[$field] = 'nullable|in:Produção,Homologação,Desenvolvimento';
             } else {
                 $rules[$field] = 'nullable|string|max:255';
             }
@@ -130,33 +130,36 @@ class PlanilhaController extends Controller
         $oldValues = $planilhaItem->only(array_keys($this->fields));
         $newValues = $request->only(array_keys($this->fields));
 
-        $changed = false;
-        $descricao = "Alteração no campo: ";
-        $vazio = "Campo vazio";
+        $descricao = [];
+        $vazio = "Vazio";
 
+        // Atualiza o item
         $planilhaItem->update($newValues);
 
+        // Verifica campo por campo o que mudou
         foreach ($oldValues as $field => $oldValue) {
             $newValue = $planilhaItem->$field;
 
             if ($oldValue != $newValue) {
-                $changed = true;
-                $label = $this->fields[$field] ?? $field;
+                $label = $this->fields[$field] ?? ucfirst($field);
 
                 $oldFormatted = (trim($oldValue) === '') ? $vazio : e($oldValue);
                 $newFormatted = (trim($newValue) === '') ? $vazio : e($newValue);
 
-                $descricao .= "{$label} de '{$oldFormatted}' para '{$newFormatted}'. ";
+                $descricao[] = "O campo \"{$label}\" foi alterado de \"{$oldFormatted}\" para \"{$newFormatted}\".";
             }
         }
 
-        if ($changed) {
+        // Se houve alterações, salva o histórico
+        if (!empty($descricao)) {
             AlteracaoCard::create([
                 'user_id' => Auth::id(),
-                'descricao' => $descricao,
+                'descricao' => implode(' ', $descricao),
             ]);
         }
 
-        return redirect()->route('planilha.index')->with('success', 'Planilha atualizada com sucesso!');
+        return redirect()
+            ->route('planilha.index')
+            ->with('success', 'Os dados da planilha foram atualizados com sucesso!');
     }
 }
