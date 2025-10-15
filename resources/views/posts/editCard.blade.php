@@ -43,7 +43,7 @@
             const descricao = document.getElementById('descricao').value.trim();
 
             if (descricao === '') {
-                event.preventDefault(); // impede o envio do formulário
+                event.preventDefault();
                 alert('A descrição não pode estar vazia.');
             }
         });
